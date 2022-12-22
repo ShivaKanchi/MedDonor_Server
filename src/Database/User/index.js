@@ -14,4 +14,9 @@ const UserSchema = new mongoose.Schema({
     timestamps: true
 })
 
+UserSchema.methods.generateJwtToken = function () {
+    return jwt.sign({ user: this._id.toString() }, "MedDonor")
+}
+
+
 export const UserModel = mongoose.model("users", UserSchema)
