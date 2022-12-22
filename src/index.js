@@ -2,9 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv'
 dotenv.config()
 //files
-import dbconnection from './Database/dbconnection'
-
-
+import dbconnection from './Model/dbconnection'
 
 const meddonor = express()
 meddonor.use(express.json())
@@ -14,7 +12,7 @@ meddonor.get("/", (req, res) => {
         message: "MedDonor server up",
     })
 })
-PORT = 4000
+const PORT = 4000;
 meddonor.listen(PORT, () => {
     console.log("Server is up")
     dbconnection()

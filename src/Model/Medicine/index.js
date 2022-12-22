@@ -9,4 +9,4 @@ const medicineSchema = new mongoose.Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model("medicines", medicineSchema)
+export const MedicineModel = mongoose.model("medicines", medicineSchema)
