@@ -4,7 +4,7 @@
   "description": "Server for MedDonor",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node ./src/server.js"
   },
   "author": "Shiva Kanchi",
   "license": "ISC",
