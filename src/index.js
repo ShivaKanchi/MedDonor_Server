@@ -5,15 +5,21 @@ dotenv.config()
 import dbconnect from "./Database/dbconnection.js";
 //Routes
 import User from "./Api/User";
+import Event from "./Api/Event";
+
 const meddonor = express()
 meddonor.use(express.json())
+
 //all route
 meddonor.get("/", (req, res) => {
     res.json({
         message: "MedDonor server up",
     })
 })
+
 meddonor.use("/user", User)
+meddonor.use("/event", Event)
+
 const PORT = 4000;
 meddonor.listen(PORT, () => {
     console.log("Server is up")

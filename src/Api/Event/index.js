@@ -3,6 +3,13 @@ import passport from "passport";
 import { EventModel } from "../../Database/Event";
 const Router = express.Router();
 
+/*
+*Route    /
+*Desc     Get all events
+*Params   -
+*Method   GET
+*Access   Public
+*/
 Router.get("/", async (req, res) => {
     const Events = await EventModel.find();
     if (Events.length === 0) {
@@ -18,6 +25,14 @@ Router.get("/", async (req, res) => {
         }
     );
 })
+
+/*
+*Route    /
+*Desc     Get event by id
+*Params   -
+*Method   GET
+*Access   Public
+*/
 Router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const Event = await EventModel.findById(id);
@@ -32,6 +47,14 @@ Router.get("/:id", async (req, res) => {
         data: Event,
     });
 })
+
+/*
+*Route    /
+*Desc     Create a Event
+*Params   -
+*Method   POST
+*Access   Public
+*/
 Router.post("/", async (req, res) => {
     const { data } = req.body;
     const eventCreate = await EventModel.create({
@@ -43,6 +66,13 @@ Router.post("/", async (req, res) => {
     });
 })
 
+/*
+*Route    /
+*Desc     Update a Event
+*Params   -
+*Method   PUT
+*Access   Public
+*/
 Router.put("/:id", async (req, res) => {
     const { id } = req.params;
     const { data } = req.body;
