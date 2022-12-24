@@ -51,7 +51,7 @@ Router.get("/:id", async (req, res) => {
 /*
 *Route    /
 *Desc     Create a Event
-*Params   -
+*Params   body(data)
 *Method   POST
 *Access   Public
 */
@@ -69,7 +69,7 @@ Router.post("/", async (req, res) => {
 /*
 *Route    /
 *Desc     Update a Event
-*Params   -
+*Params   id
 *Method   PUT
 *Access   Public
 */
@@ -95,6 +95,13 @@ Router.put("/:id", async (req, res) => {
     });
 })
 
+/*
+*Route    /
+*Desc     Delete a events
+*Params   id
+*Method   DELETE
+*Access   Public
+*/
 Router.delete("/:id", async (req, res) => {
     const { id } = req.params;
     const event = await EventModel.deleteOne({
@@ -107,6 +114,13 @@ Router.delete("/:id", async (req, res) => {
     });
 })
 
+/*
+*Route    /
+*Desc     Getevents by city
+*Params   city
+*Method   GET
+*Access   Public
+*/
 Router.get("/city/:city", async (req, res) => {
     const { city } = req.params;
     const Event = await EventModel.find({
@@ -125,6 +139,13 @@ Router.get("/city/:city", async (req, res) => {
     })
 })
 
+/*
+*Route    /
+*Desc     Get events by coordinator
+*Params   coordinator
+*Method   GET
+*Access   Public
+*/
 Router.get("/coordinator/:coordinator", async (req, res) => {
     const { coordinator } = req.params;
     const Event = await EventModel.find({
@@ -143,6 +164,13 @@ Router.get("/coordinator/:coordinator", async (req, res) => {
     })
 })
 
+/*
+*Route    /
+*Desc     Get events on certificate (yes/no)
+*Params   certficate(yes/no)
+*Method   GET
+*Access   Public
+*/
 Router.get("/certificate/:certificate", async (req, res) => {
     const { certificate } = req.params;
     const Event = await EventModel.find({
