@@ -3,17 +3,18 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 
 const UserSchema = new mongoose.Schema({
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true },
-    username: { type: String, required: true },
+    firstname: { type: String },
+    lastname: { type: String },
+    email: { type: String, required: true },
     password: { type: String, required: true },
-    address: [{ detail: { type: String }, for: { type: String } }],
+    address: { type: String },
     phone: [{ type: Number }],
     donations: [{ type: mongoose.Types.ObjectId, ref: "medicines" }]
 }, {
     timestamps: true
 })
 
+//creating token
 UserSchema.methods.generateJwtToken = function () {
     return jwt.sign({ user: this._id.toString() }, "MedDonor")
 }

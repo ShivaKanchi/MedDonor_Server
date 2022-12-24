@@ -4,8 +4,9 @@
   "description": "Server for MedDonor",
   "main": "index.js",
   "scripts": {
-    "build": "babel src/index.js -d dist",
-    "start": "npm run build && nodemon dist/index.js"
+    "build": "babel ./src -d dist",
+    "start": "npm run build && node dist/index.js",
+    "dev": "nodemon --exec babel-node ./src/index.js"
   },
   "author": "Shiva Kanchi",
   "license": "ISC",
@@ -14,11 +15,15 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.8.1"
+    "mongoose": "^6.8.1",
+    "passport": "^0.6.0",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-jwt": "^4.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.7",
+    "@babel/node": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
     "nodemon": "^2.0.20"
   }
