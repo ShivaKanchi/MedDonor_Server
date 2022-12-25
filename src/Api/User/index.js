@@ -41,7 +41,50 @@ Router.post("/login", async (req, res) => {
         return res.status(500).json({ error: Error.message })
     }
 })
+
+/*
+*Route    /
+*Desc     Get user details with token
+*Params   token
+*Method   GET
+*Access   Private
+*/
+Router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const { _id, email, firstname, lastname, phone, address } = req.user;
+        return res.json({ user: { _id, email, firstname, lastname, address, phone } })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+})
+
+/*
+*Route    /
+*Desc     Get user details with token
+*Params   token
+*Method   GET
+*Access   Private
+*/
+Router.get("/update", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const { _id } = req.user._id;
+        const { userData } = req.body;
+        userData.password = undefined;//cannot update password
+        const updatedUser = await UserModel.findByIdAndUpdate(_id, {
+            $set: userData
+        }, {
+            new: true
+        })
+        return res.json({ user: updatedUser })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+})
+
+
 export default Router
+
+
 
 
 
