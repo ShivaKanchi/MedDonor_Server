@@ -32,7 +32,7 @@ UserSchema.statics.findByEmail = async ({ email }) => {
 //login check
 UserSchema.statics.findByEmailAndPassword = async ({ email, password }) => {
     const user = await UserModel.findOne({ email });
-    if (!user) throw new Error("User doesnt exists");
+    if (!user) throw new Error("User does not exists");
     const pwdMatch = await bcrypt.compare(password, user.password);
     if (!pwdMatch) throw new Error("Incorrect Password")
     return user;
