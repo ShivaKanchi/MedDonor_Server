@@ -4,7 +4,7 @@ const medicineSchema = new mongoose.Schema({
     medname: { type: String, required: true },
     category: { type: String },
     desc: { type: String, required: true },
-    donor: { type: String, required: true },
+    donor: { type: mongoose.Types.ObjectId, ref: "users", required: true },
     expiry: { type: String, required: true },
     comment: { type: String, required: true }
 }, {
