@@ -10,6 +10,7 @@ import dbconnect from "./Database/dbconnection.js";
 import User from "./Api/User";
 import Event from "./Api/Event";
 import Medicine from "./Api/Medicine";
+import Comment from "./Api/Comment"
 
 const meddonor = express()
 meddonor.use(express.json())
@@ -30,7 +31,7 @@ meddonor.get("/", (req, res) => {
 meddonor.use("/user", User)
 meddonor.use("/event", Event)
 meddonor.use("/medicine", Medicine)
-
+meddonor.use("/comment", Comment)
 
 const PORT = 4000;
 meddonor.listen(PORT, () => {
