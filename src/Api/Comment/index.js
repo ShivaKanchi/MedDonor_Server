@@ -36,16 +36,12 @@ Router.put("/like/:id", passport.authenticate("jwt", { session: false }), async 
         const { cmtid } = req.params;
         const { _id } = req.user;
         const newCmt = await CommentModel.findOneAndUpdate(cmtid, {
-            likes: _id
+            likes: _id,
+            $pullAll: { dislikes: [_id] }
         }, {
             new: true
         })
-        const newCmtt = await CommentModel.findOneAndRemove(cmtid, {
-            dislikes: _id
-        }, {
-            new: true
-        })
-        return res.status(200).json({ comment: newCmtt })
+        return res.status(200).json({ comment: newCmt })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -63,16 +59,12 @@ Router.put("/dislike/:id", passport.authenticate("jwt", { session: false }), asy
         const { cmtid } = req.params;
         const { _id } = req.user;
         const newCmt = await CommentModel.findOneAndUpdate(cmtid, {
-            likes: _id
+            dislikes: _id,
+            $pullAll: { likes: [_id] }
         }, {
             new: true
         })
-        const newCmtt = await CommentModel.findOneAndRemove(cmtid, {
-            dislikes: _id
-        }, {
-            new: true
-        })
-        return res.status(200).json({ comment: newCmtt })
+        return res.status(200).json({ comment: newCmt })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
