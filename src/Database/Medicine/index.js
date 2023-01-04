@@ -6,7 +6,7 @@ const medicineSchema = new mongoose.Schema({
     desc: { type: String, required: true },
     donor: { type: mongoose.Types.ObjectId, ref: "users", required: true },
     expiry: { type: String, required: true },
-    comment: { type: String, required: true }
+    comment: { type: mongoose.Types.ObjectId, ref: "comments" }
 }, {
     timestamps: true
 })

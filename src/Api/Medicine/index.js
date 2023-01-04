@@ -27,14 +27,14 @@ Router.get("/", async (req, res) => {
 *Method   POST
 *Access   Private
 */
-Router.get("/new", passport.authenticate("jwt", { session: false }), async (req, res) => {
+Router.post("/new", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
         const { _id } = req.user;
         const { medData } = req.body;
         const newMed = await MedicineModel.create({
-            ...reviewData, donor: _id
+            ...medData, donor: _id
         })
-        return res.status(200).json({ Medicines: medData })
+        return res.status(200).json({ Medicines: newMed })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
