@@ -13,6 +13,7 @@ const Router = express.Router();
 Router.get("/", async (req, res) => {
     try {
         const medData = await MedicineModel.find();
+        if (!medData) return res.status(404).json({ Failed: "No Medicines found" })
         return res.status(200).json({ Medicines: medData })
     } catch (error) {
         return res.status(500).json({ error: error.message })

@@ -55,7 +55,7 @@ Router.get("/:id", async (req, res) => {
 *Method   POST
 *Access   Public
 */
-Router.post("/", async (req, res) => {
+Router.post("/new", passport.authenticate("jwt", { session: false }), async (req, res) => {
     const { data } = req.body;
     const eventCreate = await EventModel.create({
         ...data

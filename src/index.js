@@ -9,6 +9,7 @@ import dbconnect from "./Database/dbconnection.js";
 //Routes
 import User from "./Api/User";
 import Event from "./Api/Event";
+import Medicine from "./Api/Medicine";
 
 const meddonor = express()
 meddonor.use(express.json())
@@ -19,16 +20,17 @@ meddonor.use(session({ secret: process.env.JWTSECRET }));
 meddonor.use(passport.initialize());
 meddonor.use(passport.session());
 
-
-//all route
+//default route
 meddonor.get("/", (req, res) => {
     res.json({
         message: "MedDonor server up",
     })
 })
-
+//routes
 meddonor.use("/user", User)
 meddonor.use("/event", Event)
+meddonor.use("/medicine", Medicine)
+
 
 const PORT = 4000;
 meddonor.listen(PORT, () => {
