@@ -26,8 +26,8 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
 
 /*
 *Route    comment/verify
-*Desc     Give a Like to comment with token
-*Params   token
+*Desc     Give a verification to comment with token only admin
+*Params   token, cmt id
 *Method   POST 
 *Access   Private
 */
@@ -42,12 +42,33 @@ Router.put("/verify/:id", passport.authenticate("jwt", { session: false }), asyn
             new: true
         })
         return res.status(200).json({ comment: newCmt })
-
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
 })
 
+/*
+*Route    comment/unverify
+*Desc     Give a unverfication to comment with token only admin
+*Params   token,cmt id
+*Method   PUT 
+*Access   Private
+*/
+Router.put("/unverify/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const { cmtid } = req.params;
+        const { email } = req.user;
+        if (email != "Admin@gmail.com") return res.status(500).json({ failed: "You are not Admin" })
+        const newCmt = await CommentModel.findOneAndUpdate(cmtid, {
+            verfied: false
+        }, {
+            new: true
+        })
+        return res.status(200).json({ comment: newCmt })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+})
 /*
 *Route    comment/like 
 *Desc     Give a Like to comment with token
