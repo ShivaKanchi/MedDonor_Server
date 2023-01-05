@@ -25,6 +25,30 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
 })
 
 /*
+*Route    comment/verify
+*Desc     Give a Like to comment with token
+*Params   token
+*Method   POST 
+*Access   Private
+*/
+Router.put("/verify/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const { cmtid } = req.params;
+        const { email } = req.user;
+        if (email != "Admin@gmail.com") return res.status(500).json({ failed: "You are not Admin" })
+        const newCmt = await CommentModel.findOneAndUpdate(cmtid, {
+            verfied: true
+        }, {
+            new: true
+        })
+        return res.status(200).json({ comment: newCmt })
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+})
+
+/*
 *Route    comment/like 
 *Desc     Give a Like to comment with token
 *Params   token
