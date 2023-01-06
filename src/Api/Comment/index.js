@@ -11,7 +11,7 @@ const Router = express.Router();
 *Method   POST
 *Access   Private
 */
-Router.post("/new/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+Router.post("/new/:medid", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
         const { medid } = req.params;
         if (!medid) return res.status(400).json({ failed: "No medicine id provided" })
