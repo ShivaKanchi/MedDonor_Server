@@ -11,12 +11,14 @@ const Router = express.Router();
 *Method   POST
 *Access   Private
 */
-Router.post("/new", passport.authenticate("jwt", { session: false }), async (req, res) => {
+Router.post("/new/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
+        const { medid } = req.params;
+        if (!medid) return res.status(400).json({ failed: "No medicine id provided" })
         const { _id } = req.user;
         const { cmtData } = req.body;
         const newCmt = await CommentModel.create({
-            ...cmtData, cmtby: _id
+            ...cmtData, cmtby: _id, cmtfor: medid
         })
         return res.status(200).json({ comment: newCmt })
     } catch (error) {

@@ -50,7 +50,6 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
 Router.get("/search/:searchstring", async (req, res) => {
     try {
         const { searchstring } = req.params;
-        console.log(searchstring)
         const medicines = await MedicineModel.find({ medname: { $regex: searchstring, $options: "i" } });
         if (medicines.length === 0) return res.status(404).json({ error: `No Medicines found by ${searchstring}` })
         return res.status(200).json({ medicines })
