@@ -127,7 +127,7 @@ Router.put("/dislike/:id", passport.authenticate("jwt", { session: false }), asy
 Router.get("/search/:medid", async (req, res) => {
     try {
         const { medid } = req.params;
-        const medicines = await MedicineModel.find({ medid });
+        const medicines = await CommentModel.find({ medid });
         if (medicines.length === 0) return res.status(404).json({ error: `No Commments found on ${medid}` })
         return res.status(200).json({ medicines })
     } catch (error) {
