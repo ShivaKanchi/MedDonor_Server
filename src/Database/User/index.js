@@ -9,7 +9,8 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true },
     address: { type: String },
     phone: [{ type: Number }],
-    donations: [{ type: mongoose.Types.ObjectId, ref: "medicines" }]
+    donations: [{ type: mongoose.Types.ObjectId, ref: "medicines" }],
+    comments: [{ type: mongoose.Types.ObjectId, ref: "comments" }]
 }, {
     timestamps: true
 })

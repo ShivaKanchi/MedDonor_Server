@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import { CommentModel } from "../../Database/Comment";
+import { CommentModel, UserModel } from "../../Database/Comment";
 
 const Router = express.Router();
 
@@ -19,7 +19,12 @@ Router.post("/new/:medid", passport.authenticate("jwt", { session: false }), asy
         const newCmt = await CommentModel.create({
             ...cmtData, cmtby: _id, cmtfor: medid
         })
-        return res.status(200).json({ comment: newCmt })
+        // const updatedUser = await UserModel.findByIdAndUpdate( _id, {
+        //     $push: { comments: newCmt._id }
+        // }, {
+        //     new: true
+        // })
+        return res.status(200).json({ comment: newCmt, commented_by: updatedUser })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }

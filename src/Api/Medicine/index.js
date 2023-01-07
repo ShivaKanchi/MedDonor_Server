@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import { MedicineModel } from "../../Database/allmodels";
+import { MedicineModel, UserModel } from "../../Database/allmodels";
 const Router = express.Router();
 
 /*
@@ -34,7 +34,12 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
         const newMed = await MedicineModel.create({
             ...medData, donor: _id
         })
-        return res.status(200).json({ Medicines: newMed })
+        const updatedUser = await UserModel.findByIdAndUpdate(_id, {
+            $push: { donations: newMed._id }
+        }, {
+            new: true
+        })
+        return res.status(200).json({ Medicines: newMed, Donated_by: updatedUser })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
