@@ -68,6 +68,8 @@ Router.get("/search/:searchstring", async (req, res) => {
 Router.delete("/delete/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
         const { _id } = req.params;
+        const { email } = req.user;
+        if (email != "Admin@gmail.com") return res.status(500).json({ failed: "You are not Admin" })
         const med = await MedicineModel.findByIdAndDelete({ _id })
         if (!med) return res.status(404).json({ failed: "No Medicine with that id" })
         return res.status(200).json({ message: "Medicine Removed", comment: med })
