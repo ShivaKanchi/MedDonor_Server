@@ -58,4 +58,22 @@ Router.get("/search/:searchstring", async (req, res) => {
     }
 })
 
+/*
+*Route    /delete/:_id
+*Desc     Delete a medicine
+*Params   token, medicine
+*Method   POST
+*Access   Private
+*/
+Router.delete("/delete/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const med = await MedicineModel.findByIdAndDelete({ _id })
+        if (!med) return res.status(404).json({ failed: "No Medicine with that id" })
+        return res.status(200).json({ message: "Medicine Removed", comment: med })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+})
+
 export default Router

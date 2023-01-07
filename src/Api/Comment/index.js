@@ -14,7 +14,6 @@ const Router = express.Router();
 Router.post("/new/:medid", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
         const { medid } = req.params;
-        if (!medid) return res.status(400).json({ failed: "No medicine id provided" })
         const { _id } = req.user;
         const { cmtData } = req.body;
         const newCmt = await CommentModel.create({
@@ -127,6 +126,7 @@ Router.put("/dislike/:id", passport.authenticate("jwt", { session: false }), asy
 Router.get("/:medid", async (req, res) => {
     try {
         const { medid } = req.params;
+        if (!medid) return res.status(400).json({ failed: "No medicine id provided" })
         const medicines = await CommentModel.find({ cmtfor: medid });
         if (medicines.length === 0) return res.status(404).json({ error: `No Commments found on ${medid}` })
         return res.status(200).json({ medicines })
@@ -145,8 +145,8 @@ Router.get("/:medid", async (req, res) => {
 Router.delete("/delete/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
         const { _id } = req.params;
-        if (!_id) return res.status(400).json({ failed: "No comment id provided" })
-        const newCmt = await CommentModel.findIdAndDelete({ _id })
+        const newCmt = await CommentModel.findByIdAndDelete({ _id })
+        if (!newCmt) return res.status(404).json({ failed: "No comment with that id" })
         return res.status(200).json({ message: "Comment deleted", comment: newCmt })
     } catch (error) {
         return res.status(500).json({ error: error.message })
