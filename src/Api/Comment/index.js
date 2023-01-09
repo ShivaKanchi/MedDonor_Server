@@ -157,4 +157,25 @@ Router.delete("/delete/:_id", passport.authenticate("jwt", { session: false }), 
         return res.status(500).json({ error: error.message })
     }
 })
+
+
+
+
+/*
+*Route    comment/delete/:medid
+*Desc     Adding a new Comment with user id
+*Params   cmt,token
+*Method   POST
+*Access   Private
+*/
+Router.delete("/delete/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const newCmt = await CommentModel.findByIdAndDelete({ _id })
+        if (!newCmt) return res.status(404).json({ failed: "No comment with that id" })
+        return res.status(200).json({ message: "Comment deleted", comment: newCmt })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+})
 export default Router;
