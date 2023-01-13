@@ -41,13 +41,13 @@ meddonor.use("/comment", Comment)
 
 const PORT = 4000;
 meddonor.listen(PORT, () => {
-    console.log("Server is up")
+    console.log(`Server is up on ${PORT}`)
     dbconnect()
         .then(() => {
             console.log("Database connected")
         })
         .catch((error) => {
-            console.log("Db didnt conneted")
+            console.log("Db not connected")
             console.log(error)
         })
 })
