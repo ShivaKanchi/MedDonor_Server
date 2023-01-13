@@ -2,6 +2,8 @@ import express from 'express';
 import passport from 'passport';
 import session from "express-session";
 import dotenv from 'dotenv'
+import cors from 'cors'
+import helmet from 'helmet'
 import privateRouteConfig from "./Config/route.config";
 dotenv.config()
 //files
@@ -13,6 +15,10 @@ import Medicine from "./Api/Medicine";
 import Comment from "./Api/Comment"
 
 const meddonor = express()
+
+meddonor.use(cors({ origin: "http://localhost:3000" }));
+meddonor.use(helmet());
+
 meddonor.use(express.json())
 
 //sessions and token config
