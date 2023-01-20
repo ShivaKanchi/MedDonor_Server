@@ -65,7 +65,7 @@ Router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
 *Method   GET
 *Access   Private
 */
-Router.get("/update", passport.authenticate("jwt", { session: false }), async (req, res) => {
+Router.put("/update", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
         const { _id } = req.user._id;
         const { userData } = req.body;

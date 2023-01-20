@@ -39,7 +39,7 @@ meddonor.use("/event", Event)
 meddonor.use("/medicine", Medicine)
 meddonor.use("/comment", Comment)
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 meddonor.listen(PORT, () => {
     console.log(`Server is up on ${PORT}`)
     dbconnect()
