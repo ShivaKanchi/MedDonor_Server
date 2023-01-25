@@ -58,6 +58,23 @@ Router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
     }
 })
 
+
+/*
+*Route    /
+*Desc     Get user details with token
+*Params   token
+*Method   GET
+*Access   Private
+*/
+Router.get("/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const { _id, email, firstname, lastname, phone, address } = req.user;
+        return res.json({ user: { _id, email, firstname, lastname, address, phone } })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+})
+
 /*
 *Route    /
 *Desc     Get user details with token
