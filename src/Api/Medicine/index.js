@@ -30,7 +30,7 @@ Router.get("/", async (req, res) => {
 */
 Router.get("/:id", async (req, res) => {
     const { id } = req.params;
-    const Event = await EventModel.findById(id);
+    const Event = await MedicineModel.findById(id);
     if (!Event) {
         return res.status(404).json({
             success: false,
