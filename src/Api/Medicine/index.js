@@ -30,11 +30,11 @@ Router.get("/", async (req, res) => {
 */
 Router.get("/:id", async (req, res) => {
     const { id } = req.params;
-    const Event = await MedicineModel.findById(id);
-    if (!Event) {
+    const Medicine = await MedicineModel.findById(id);
+    if (!Medicine) {
         return res.status(404).json({
             success: false,
-            message: "Event by id " + id + " not found"
+            message: "Medicine by id " + id + " not found"
         });
     }
     return res.status(200).json({
