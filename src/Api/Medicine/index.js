@@ -20,6 +20,29 @@ Router.get("/", async (req, res) => {
     }
 })
 
+
+/*
+*Route    /
+*Desc     Get event by id
+*Params   -
+*Method   GET
+*Access   Public
+*/
+Router.get("/:id", async (req, res) => {
+    const { id } = req.params;
+    const Event = await EventModel.findById(id);
+    if (!Event) {
+        return res.status(404).json({
+            success: false,
+            message: "Event by id " + id + " not found"
+        });
+    }
+    return res.status(200).json({
+        success: true,
+        data: Event,
+    });
+})
+
 /*
 *Route    /new
 *Desc     Create a new medicine
