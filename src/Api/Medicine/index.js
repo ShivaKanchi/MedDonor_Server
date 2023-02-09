@@ -23,7 +23,7 @@ Router.get("/", async (req, res) => {
 
 /*
 *Route    /
-*Desc     Get event by id
+*Desc     Get Medicine by id
 *Params   -
 *Method   GET
 *Access   Public
