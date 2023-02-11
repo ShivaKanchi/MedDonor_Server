@@ -76,7 +76,7 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
 Router.put("/:id", async (req, res) => {
     const { id } = req.params;
     const { data } = req.body;
-    const updateMedical = await EventModel.findOneAndUpdate(
+    const updateMedical = await MedicalModel.findOneAndUpdate(
         {
             _id: id,
         },
@@ -89,8 +89,26 @@ Router.put("/:id", async (req, res) => {
             new: true
         });
     return res.status(200).json({
-        success: true,
         message: "One Medical updated",
         data: updateMedical
+    });
+})
+
+/*
+*Route    /
+*Desc     Delete a Medical
+*Params   id
+*Method   DELETE
+*Access   Public
+*/
+Router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    const DeletedMedical = await MedicalModel.deleteOne({
+        _id: id
+    });
+    return res.status(202).json({
+        success: true,
+        message: "Deleted a Medical",
+        data: DeletedMedical,
     });
 })

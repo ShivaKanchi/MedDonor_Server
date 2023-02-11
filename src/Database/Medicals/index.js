@@ -8,6 +8,8 @@ const medicalSchema = new mongoose.Schema({
     city: { type: String },
     state: { type: String },
     pincode: { type: String },
+    holiday: { type: String },
+    workinghour: { type: String },
     coords: { type: String },
     medicines: [{ type: mongoose.Types.ObjectId, ref: "medicines" }]
 }, {
