@@ -11,12 +11,13 @@ import dbconnect from "./Database/dbconnection.js";
 //Routes
 import User from "./Api/User";
 import Event from "./Api/Event";
+import Medical from "./Api/Medical";
 import Medicine from "./Api/Medicine";
 import Comment from "./Api/Comment"
 
 const meddonor = express()
 
-meddonor.use(cors({ origin: "http://localhost:3000" }));
+meddonor.use(cors());
 meddonor.use(helmet());
 
 meddonor.use(express.json())
@@ -36,6 +37,7 @@ meddonor.get("/", (req, res) => {
 //routes
 meddonor.use("/user", User)
 meddonor.use("/event", Event)
+meddonor.use("/medical", Medical)
 meddonor.use("/medicine", Medicine)
 meddonor.use("/comment", Comment)
 
