@@ -112,3 +112,5 @@ Router.delete("/:id", async (req, res) => {
         data: DeletedMedical,
     });
 })
+
+export default Router;

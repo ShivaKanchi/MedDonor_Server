@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import { CommentModel, UserModel } from "../../Database/Comment";
+import { CommentModel } from "../../Database/Comment";
 
 const Router = express.Router();
 
