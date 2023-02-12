@@ -2,7 +2,8 @@ import mongoose from 'mongoose'
 
 const medicalSchema = new mongoose.Schema({
     medicalname: { type: String, required: true },
-    medicalimage: { type: String },
+    medicalimage: [{ type: String }],
+    type: { type: Boolean },
     landmark: { type: String },
     address: { type: String },
     city: { type: String },
