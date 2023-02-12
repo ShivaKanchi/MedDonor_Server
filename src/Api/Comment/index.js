@@ -92,7 +92,7 @@ Router.put("/like/:id", passport.authenticate("jwt", { session: false }), async 
         }, {
             new: true
         })
-        return res.status(200).json({ comment: newCmt })
+        return res.status(200).json({ message: "Comment liked", data: newCmt })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -115,7 +115,7 @@ Router.put("/dislike/:id", passport.authenticate("jwt", { session: false }), asy
         }, {
             new: true
         })
-        return res.status(200).json({ comment: newCmt })
+        return res.status(200).json({ message: "Comment liked", data: newCmt })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
