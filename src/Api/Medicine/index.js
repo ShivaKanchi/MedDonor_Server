@@ -14,7 +14,7 @@ Router.get("/", async (req, res) => {
     try {
         const medData = await MedicineModel.find();
         if (medData.length === 0) return res.status(404).json({ Failed: "No Medicines found" })
-        return res.status(200).json({ Medicines: medData })
+        return res.status(200).json({ data: medData })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -39,7 +39,7 @@ Router.get("/:id", async (req, res) => {
     }
     return res.status(200).json({
         success: true,
-        Medicine: Medicine,
+        data: Medicine,
     });
 })
 
@@ -62,7 +62,7 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
         }, {
             new: true
         })
-        return res.status(200).json({ Medicines: newMed, Donated_by: updatedUser })
+        return res.status(200).json({ Medicine: newMed, Donated_by: updatedUser })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -80,7 +80,7 @@ Router.get("/search/:searchstring", async (req, res) => {
         const { searchstring } = req.params;
         const medicines = await MedicineModel.find({ medname: { $regex: searchstring, $options: "i" } });
         if (medicines.length === 0) return res.status(404).json({ error: `No Medicines found by ${searchstring}` })
-        return res.status(200).json({ medicines })
+        return res.status(200).json({ data: medicines })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -100,7 +100,7 @@ Router.delete("/delete/:_id", passport.authenticate("jwt", { session: false }), 
         if (email != "Admin@gmail.com") return res.status(500).json({ failed: "You are not Admin" })
         const med = await MedicineModel.findByIdAndDelete({ _id })
         if (!med) return res.status(404).json({ failed: "No Medicine with that id" })
-        return res.status(200).json({ message: "Medicine Removed", comment: med })
+        return res.status(200).json({ message: "Medicine Removed", data: med })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
