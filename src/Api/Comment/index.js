@@ -115,7 +115,7 @@ Router.put("/dislike/:id", passport.authenticate("jwt", { session: false }), asy
         }, {
             new: true
         })
-        return res.status(200).json({ message: "Comment liked", data: newCmt })
+        return res.status(200).json({ message: "Comment disliked", data: newCmt })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -132,9 +132,9 @@ Router.get("/:medid", async (req, res) => {
     try {
         const { medid } = req.params;
         if (!medid) return res.status(400).json({ failed: "No medicine id provided" })
-        const medicines = await CommentModel.find({ cmtfor: medid });
-        if (medicines.length === 0) return res.status(404).json({ error: `No Commments found on ${medid}` })
-        return res.status(200).json({ medicines })
+        const commentOfMedicine = await CommentModel.find({ cmtfor: medid });
+        if (commentOfMedicine.length === 0) return res.status(404).json({ error: `No Commments found on ${medid}` })
+        return res.status(200).json({ data: commentOfMedicine })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -152,7 +152,7 @@ Router.delete("/delete/:_id", passport.authenticate("jwt", { session: false }), 
         const { _id } = req.params;
         const newCmt = await CommentModel.findByIdAndDelete({ _id })
         if (!newCmt) return res.status(404).json({ failed: "No comment with that id" })
-        return res.status(200).json({ message: "Comment deleted", comment: newCmt })
+        return res.status(200).json({ message: "Comment deleted", data: newCmt })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
