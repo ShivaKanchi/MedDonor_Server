@@ -24,7 +24,7 @@ Router.post("/new/:medid", passport.authenticate("jwt", { session: false }), asy
         // }, {
         //     new: true
         // })
-        return res.status(200).json({ comment: newCmt, commented_by: updatedUser })
+        return res.status(200).json({ message: "Comment added", comment: newCmt, commented_by: updatedUser })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -47,7 +47,7 @@ Router.put("/verify/:id", passport.authenticate("jwt", { session: false }), asyn
         }, {
             new: true
         })
-        return res.status(200).json({ comment: newCmt })
+        return res.status(200).json({ message: "Comment verified", data: newCmt })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -70,7 +70,7 @@ Router.put("/unverify/:id", passport.authenticate("jwt", { session: false }), as
         }, {
             new: true
         })
-        return res.status(200).json({ comment: newCmt })
+        return res.status(200).json({ message: "Comment unverified", data: newCmt })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
