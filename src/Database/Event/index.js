@@ -10,7 +10,7 @@ const eventSchema = new mongoose.Schema({
     startdate: { type: String, required: true },
     enddate: { type: String, required: true },
     //coordinator: { type: mongoose.Types.ObjectId, required: true, ref: "users" },
-    coordinator: { type: String },
+    coordinatorname: { type: String },
     coordinatorimage: { type: String },
     coordinatorphno: { type: Number },
     certificate: { type: Boolean }

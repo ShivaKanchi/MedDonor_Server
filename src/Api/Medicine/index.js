@@ -52,10 +52,10 @@ Router.get("/:id", async (req, res) => {
 */
 Router.post("/new", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
-        const { _id } = req.user;
+        const { _id, firstname,lastname } = req.user;
         const { medData } = req.body;
         const newMed = await MedicineModel.create({
-            ...medData, donor: _id
+            ...medData, donor: _id, donorname: firstname+" "+lastname
         })
         const updatedUser = await UserModel.findByIdAndUpdate(_id, {
             $push: { donations: newMed._id }
