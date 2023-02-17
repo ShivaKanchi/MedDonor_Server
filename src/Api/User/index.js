@@ -10,7 +10,7 @@ const Router = express.Router();
 *Method   GET
 *Access   Public
 */
-Router.get("/all", async (req, res) => {
+Router.get("/users/all", async (req, res) => {
     try {
         const userData = await UserModel.find();
         if (userData.length === 0) return res.status(404).json({ Failed: "No Users found" })
