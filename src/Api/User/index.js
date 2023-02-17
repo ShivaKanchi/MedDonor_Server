@@ -3,6 +3,23 @@ import passport from "passport";
 import { UserModel } from "../../Database/User";
 const Router = express.Router();
 
+/*
+*Route    /all
+*Desc     Get All Users
+*Params   None
+*Method   GET
+*Access   Public
+*/
+Router.get("/all", async (req, res) => {
+    try {
+        const medData = await MedicineModel.find();
+        if (medData.length === 0) return res.status(404).json({ Failed: "No Medicines found" })
+        return res.status(200).json({ data: medData })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+})
+
 
 /*
 *Route    /register
