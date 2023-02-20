@@ -56,14 +56,16 @@ Router.get("/:id", async (req, res) => {
 *Access   Public
 */
 Router.post("/new", passport.authenticate("jwt", { session: false }), async (req, res) => {
-    const { data } = req.body;
-    const eventCreate = await EventModel.create({
-        ...data
-    });
-    return res.status(200).json({
-        success: true,
-        data: eventCreate
-    });
+    try {
+        const { eventData } = req.body;
+        const eventCreate = await EventModel.create({
+            ...eventData
+        });
+        return res.status(200).json({ data: eventCreate });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
 })
 
 /*
