@@ -60,7 +60,7 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
     const eventCreate = await EventModel.create({
         ...data
     });
-    return res.status(201).json({
+    return res.status(200).json({
         success: true,
         data: eventCreate
     });
