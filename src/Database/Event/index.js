@@ -13,7 +13,7 @@ const eventSchema = new mongoose.Schema({
     coordinatorname: { type: String },
     coordinatorimage: { type: String },
     coordinatorphno: { type: Number },
-    certificate: { type: Boolean }
+    certificate: { type: String }
 }, {
     timestamps: true
 })
