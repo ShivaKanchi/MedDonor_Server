@@ -9,6 +9,7 @@ const medicalSchema = new mongoose.Schema({
     city: { type: String },
     state: { type: String },
     pincode: { type: String },
+    phone: [{ type: Number }],
     holiday: { type: String },
     workinghour: { type: String },
     coords: { type: String },
