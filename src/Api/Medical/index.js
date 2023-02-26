@@ -78,7 +78,7 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
 *Method   PUT
 *Access   Public
 */
-Router.put("/:id", async (req, res) => {
+Router.put("/update/:id", async (req, res) => {
     const { id } = req.params;
     const { data } = req.body;
     const updateMedical = await MedicalModel.findOneAndUpdate(
