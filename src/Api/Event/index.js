@@ -137,9 +137,9 @@ Router.delete("/delete/:id", passport.authenticate("jwt", { session: false }), a
 Router.get("/city/:city", async (req, res) => {
     const { city } = req.params;
     const Event = await EventModel.find({
-        city: city
+        city: { $regex: city, $options: "i" }
     });
-    if (!Event) {
+    if (Event.length === 0) {
         return res.status(404).json({
             success: false,
             message: "No Events found in " + city
@@ -151,7 +151,7 @@ Router.get("/city/:city", async (req, res) => {
         data: Event,
     })
 })
-
+// db.InspirationalWomen.find({ city: { $regex: city, i } })
 /*
 *Route    /
 *Desc     Get events by coordinator
