@@ -151,7 +151,6 @@ Router.get("/city/:city", async (req, res) => {
         data: Event,
     })
 })
-// db.InspirationalWomen.find({ city: { $regex: city, i } })
 /*
 *Route    /
 *Desc     Get events by coordinator
@@ -159,20 +158,20 @@ Router.get("/city/:city", async (req, res) => {
 *Method   GET
 *Access   Public
 */
-Router.get("/coordinator/:coordinator", async (req, res) => {
-    const { coordinator } = req.params;
+Router.get("/coordinator/:coordinatorname", async (req, res) => {
+    const { coordinatorname } = req.params;
     const Event = await EventModel.find({
-        coordinator: coordinator
+        coordinatorname: { $regex: coordinatorname, $options: "i" }
     });
-    if (!Event) {
+    if (Event.length === 0) {
         return res.status(404).json({
             success: false,
-            message: "No Events with Coordinator " + coordinator
+            message: "No Events with Coordinator " + coordinatorname
         });
     }
     return res.status(200).json({
         success: true,
-        message: "Events with Coordinator " + coordinator,
+        message: "Events with Coordinator " + coordinatorname,
         data: Event,
     })
 })
@@ -187,9 +186,9 @@ Router.get("/coordinator/:coordinator", async (req, res) => {
 Router.get("/certificate/:certificate", async (req, res) => {
     const { certificate } = req.params;
     const Event = await EventModel.find({
-        certificate: certificate
+        certificate: { $regex: certificate, $options: "i" }
     });
-    if (!Event) {
+    if (Event.length === 0) {
         return res.status(404).json({
             success: false,
             message: "No Events with Certificate " + certificate
