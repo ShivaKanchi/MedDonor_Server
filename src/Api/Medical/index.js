@@ -57,8 +57,13 @@ Router.get("/:id", async (req, res) => {
 */
 Router.post("/new", passport.authenticate("jwt", { session: false }), async (req, res) => {
     const { data } = req.body;
+    const { _id, firstname, lastname, profilepic, phone } = req.user;
     const medicalAdd = await MedicalModel.create({
-        ...data
+        ...data,
+        owner: _id,
+        ownerimage: profilepic,
+        ownername: data?.ownername ? data.ownername : firstname + " " + lastname,
+        ownerphone: data?.ownerphone ? data.ownerphone : phone
     });
     return res.status(201).json({
         success: true,
@@ -92,6 +97,32 @@ Router.put("/:id", async (req, res) => {
         message: "One Medical updated",
         data: updateMedical
     });
+})
+
+
+/*
+*Route    /
+*Desc     Get medicals by city
+*Params   city
+*Method   GET
+*Access   Public
+*/
+Router.get("/city/:city", async (req, res) => {
+    const { city } = req.params;
+    const Medical = await MedicalModel.find({
+        city: { $regex: city, $options: "i" }
+    });
+    if (Medical.length === 0) {
+        return res.status(404).json({
+            success: false,
+            message: "No Medicals found in " + city
+        });
+    }
+    return res.status(200).json({
+        success: true,
+        message: "Medicals in city " + city,
+        data: Medical,
+    })
 })
 
 /*
