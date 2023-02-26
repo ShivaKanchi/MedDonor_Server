@@ -101,8 +101,10 @@ Router.put("/:id", async (req, res) => {
 *Method   DELETE
 *Access   Public
 */
-Router.delete("/:id", async (req, res) => {
+Router.delete("/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
     const { id } = req.params;
+    const { email } = req.user;
+    if (email != "Admin@gmail.com") return res.status(500).json({ failed: "You are not Admin" })
     const DeletedMedical = await MedicalModel.deleteOne({
         _id: id
     });

@@ -57,9 +57,18 @@ Router.get("/:id", async (req, res) => {
 */
 Router.post("/new", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
-        const { eventData } = req.body;
+        const { data } = req.body;
+        const { _id, firstname, lastname, profilepic, phone } = req.user;
+        // const eventCreate = await EventModel.create({
+        //     ...eventData, coordinator: _id, coordinatorname: firstname + " " + lastname, coordinatorimage: profilepic, coordinatorphno: phone
+        // });
+        console.log(data)
         const eventCreate = await EventModel.create({
-            ...eventData
+            ...data,
+            coordinator: _id,
+            coordinatorimage: profilepic,
+            coordinatorname: data?.coordinatorname ? data.coordinatorname : firstname + " " + lastname,
+            coordinatorphno: data?.coordinatorphno ? data.coordinatorphno : phone
         });
         return res.status(200).json({ data: eventCreate });
     }
@@ -75,7 +84,7 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
 *Method   PUT
 *Access   Public
 */
-Router.put("/:id", async (req, res) => {
+Router.put("/update/:id", async (req, res) => {
     const { id } = req.params;
     const { data } = req.body;
     const updateEvent = await EventModel.findOneAndUpdate(
@@ -104,8 +113,10 @@ Router.put("/:id", async (req, res) => {
 *Method   DELETE
 *Access   Public
 */
-Router.delete("/:id", async (req, res) => {
+Router.delete("/delete/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
     const { id } = req.params;
+    const { email } = req.user;
+    if (email != "Admin@gmail.com") return res.status(500).json({ failed: "You are not Admin" })
     const event = await EventModel.deleteOne({
         _id: id
     });

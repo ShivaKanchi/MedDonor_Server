@@ -68,8 +68,8 @@ Router.post("/login", async (req, res) => {
 */
 Router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
-        const { _id, email, firstname, lastname, phone, address } = req.user;
-        return res.json({ user: { _id, email, firstname, lastname, address, phone } })
+        const userData = req.user;
+        return res.json({ user: userData })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -83,7 +83,7 @@ Router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
 *Method   GET
 *Access   Private
 */
-Router.get("/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+Router.get("/:_id", async (req, res) => {
     try {
         const { _id } = req.params;
         const user = await UserModel.findById(_id)
@@ -95,7 +95,7 @@ Router.get("/:_id", passport.authenticate("jwt", { session: false }), async (req
 
 /*
 *Route    /
-*Desc     Get user details with token
+*Desc     update a user with token
 *Params   token
 *Method   GET
 *Access   Private
@@ -104,7 +104,7 @@ Router.put("/update", passport.authenticate("jwt", { session: false }), async (r
     try {
         const { _id } = req.user._id;
         const { userData } = req.body;
-        userData.password = undefined;//cannot update password
+        userData.password = undefined; userData.email = undefined;//cannot update password
         const updatedUser = await UserModel.findByIdAndUpdate(_id, {
             $set: userData
         }, {
@@ -116,6 +116,26 @@ Router.put("/update", passport.authenticate("jwt", { session: false }), async (r
     }
 })
 
+/*
+*Route    /
+*Desc     Delete a user
+*Params   id
+*Method   DELETE
+*Access   Public
+*/
+Router.delete("/delete/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    const { id } = req.params;
+    const { email } = req.user;
+    if (email != "Admin@gmail.com") return res.status(500).json({ failed: "You are not Admin" })
+    const user = await UserModel.deleteOne({
+        _id: id
+    });
+    return res.status(202).json({
+        success: true,
+        message: "Deleted a user",
+        data: user,
+    });
+})
 
 export default Router
 

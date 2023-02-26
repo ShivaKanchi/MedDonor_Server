@@ -9,10 +9,10 @@ const eventSchema = new mongoose.Schema({
     state: { type: String },
     startdate: { type: String },
     enddate: { type: String },
-    //coordinator: { type: mongoose.Types.ObjectId, required: true, ref: "users" },
+    coordinator: { type: mongoose.Types.ObjectId, ref: "users" },
     coordinatorname: { type: String },
     coordinatorimage: { type: String },
-    coordinatorphno: { type: Number },
+    coordinatorphno: [{ type: Number }],
     certificate: { type: String }
 }, {
     timestamps: true
