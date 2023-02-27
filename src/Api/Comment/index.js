@@ -168,16 +168,16 @@ Router.delete("/delete/:_id", passport.authenticate("jwt", { session: false }), 
 */
 Router.get("/comment/:id", async (req, res) => {
     const { id } = req.params;
-    const Medicine = await CommentModel.findById(id);
-    if (!Medicine) {
+    const Comment = await CommentModel.findById(id);
+    if (!Comment) {
         return res.status(404).json({
             success: false,
-            message: "Medicine by id " + id + " not found"
+            message: "Comment by id " + id + " not found"
         });
     }
     return res.status(200).json({
         success: true,
-        data: Medicine,
+        data: Comment,
     });
 })
 
