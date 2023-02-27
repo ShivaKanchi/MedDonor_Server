@@ -159,6 +159,28 @@ Router.delete("/delete/:_id", passport.authenticate("jwt", { session: false }), 
 })
 
 
+/*
+*Route    /
+*Desc     Get Comment by id
+*Params   -
+*Method   GET
+*Access   Public
+*/
+Router.get("/comment/:id", async (req, res) => {
+    const { id } = req.params;
+    const Medicine = await CommentModel.findById(id);
+    if (!Medicine) {
+        return res.status(404).json({
+            success: false,
+            message: "Medicine by id " + id + " not found"
+        });
+    }
+    return res.status(200).json({
+        success: true,
+        data: Medicine,
+    });
+})
+
 
 
 export default Router;
