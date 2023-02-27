@@ -123,7 +123,7 @@ Router.put("/dislike/:id", passport.authenticate("jwt", { session: false }), asy
 
 /*
 *Route    /
-*Desc     Get comments of a medicine
+*Desc     Get comment of a medicine by id
 *Params   searchstring
 *Method   GET
 *Access   Public
