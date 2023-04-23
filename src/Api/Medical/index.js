@@ -33,7 +33,7 @@ Router.get("/", async (req, res) => {
 *Method   GET
 *Access   Public
 */
-Router.get("/:id", async (req, res) => {
+Router.get("/one/:id", async (req, res) => {
     const { id } = req.params;
     const oneMedical = await MedicalModel.findById(id);
     if (!oneMedical) {
@@ -133,7 +133,7 @@ Router.get("/city/:city", async (req, res) => {
 *Method   DELETE
 *Access   Public
 */
-Router.delete("/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+Router.delete("/deletemedical:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
     const { id } = req.params;
     const { email } = req.user;
     if (email != "Admin@gmail.com") return res.status(500).json({ failed: "You are not Admin" })
