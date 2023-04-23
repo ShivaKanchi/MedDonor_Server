@@ -130,7 +130,7 @@ Router.delete("/delete/:id", passport.authenticate("jwt", { session: false }), a
     const user = await UserModel.deleteOne({
         _id: id
     });
-    return res.status(202).json({
+    return res.status(200).json({
         success: true,
         message: "Deleted a user",
         data: user,
