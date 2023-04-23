@@ -71,6 +71,7 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
     });
 })
 
+
 /*
 *Route    /
 *Desc     Update a Medical
