@@ -7,7 +7,7 @@ const medicalSchema = new mongoose.Schema({
     ownername: { type: String },
     ownerimage: { type: String },
     ownerphone: [{ type: Number }],
-    type: { type: Boolean },
+    // type: { type: Boolean },
     landmark: { type: String },
     address: { type: String },
     city: { type: String },
