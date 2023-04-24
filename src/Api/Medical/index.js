@@ -126,6 +126,27 @@ Router.get("/city/:city", async (req, res) => {
     })
 })
 
+
+/*
+*Route    /
+*Desc     Get Medical by search string
+*Params   searchstring
+*Method   GET
+*Access   Public
+*/
+Router.get("/search/:searchstring", async (req, res) => {
+    try {
+        const { searchstring } = req.params;
+        const medicals = await MedicalModel.find({ medicalname: { $regex: searchstring, $options: "i" } });
+        if (medicals.length === 0) return res.status(404).json({ error: `No Medicines found by ${searchstring}` })
+        return res.status(200).json({ data: medicals })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+})
+
+
+
 /*
 *Route    /
 *Desc     Delete a Medical
@@ -191,12 +212,12 @@ export default Router;
 
 
 
-const users = [
-    { name: 'User 1', lat: 51.5074, lng: -0.1278 },
-    { name: 'User 2', lat: 51.5160, lng: -0.0937 },
-    { name: 'User 3', lat: 51.5251, lng: -0.0804 },
-    { name: 'User 4', lat: 51.5099, lng: -0.1180 },
-];
+// const users = [
+//     { name: 'User 1', lat: 51.5074, lng: -0.1278 },
+//     { name: 'User 2', lat: 51.5160, lng: -0.0937 },
+//     { name: 'User 3', lat: 51.5251, lng: -0.0804 },
+//     { name: 'User 4', lat: 51.5099, lng: -0.1180 },
+// ];
 
 // const getNearbyUsers = (lat, lng) => {
 //     const nearbyUsers = [];

@@ -89,6 +89,26 @@ Router.get("/search/:searchstring", async (req, res) => {
     }
 })
 
+
+/*
+*Route    /
+*Desc     Get Medicine by category
+*Params   searchstring
+*Method   GET
+*Access   Public
+*/
+Router.get("/category/:category", async (req, res) => {
+    try {
+        const { category } = req.params;
+        const medicines = await MedicineModel.find({ category: { $regex: category, $options: "i" } });
+        if (medicines.length === 0) return res.status(404).json({ error: `No Medicines found by ${category}` })
+        return res.status(200).json({ data: medicines })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+})
+
+
 /*
 *Route    /delete/:_id
 *Desc     Delete a medicine
