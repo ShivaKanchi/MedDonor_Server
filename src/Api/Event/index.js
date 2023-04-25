@@ -59,10 +59,6 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
     try {
         const { data } = req.body;
         const { _id, firstname, lastname, profilepic, phone } = req.user;
-        // const eventCreate = await EventModel.create({
-        //     ...eventData, coordinator: _id, coordinatorname: firstname + " " + lastname, coordinatorimage: profilepic, coordinatorphno: phone
-        // });
-        console.log(data)
         const eventCreate = await EventModel.create({
             ...data,
             coordinator: _id,

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const eventSchema = new mongoose.Schema({
-    eventname: { type: String },
+    eventname: { type: String, required: true },
     eventimage: { type: String },
     landmark: { type: String },
     address: { type: String },
