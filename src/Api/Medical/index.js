@@ -56,19 +56,24 @@ Router.get("/one/:id", async (req, res) => {
 *Access   Public
 */
 Router.post("/new", passport.authenticate("jwt", { session: false }), async (req, res) => {
-    const { data } = req.body;
-    const { _id, firstname, lastname, profilepic, phone } = req.user;
-    const medicalAdd = await MedicalModel.create({
-        ...data,
-        owner: _id,
-        ownerimage: profilepic,
-        ownername: data?.ownername ? data.ownername : firstname + " " + lastname,
-        ownerphone: data?.ownerphone ? data.ownerphone : phone
-    });
-    return res.status(200).json({
-        success: true,
-        data: medicalAdd
-    });
+    try {
+        const { data } = req.body;
+        const { _id, firstname, lastname, profilepic, phone } = req.user;
+        const medicalAdd = await MedicalModel.create({
+            ...data,
+            owner: _id,
+            ownerimage: profilepic,
+            ownername: data?.ownername ? data.ownername : firstname + " " + lastname,
+            ownerphone: data?.ownerphone ? data.ownerphone : phone
+        });
+        return res.status(200).json({
+            success: true,
+            data: medicalAdd
+        });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
 })
 
 

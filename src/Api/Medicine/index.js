@@ -53,9 +53,9 @@ Router.get("/:id", async (req, res) => {
 Router.post("/new", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
         const { _id, firstname, lastname, profilepic } = req.user;
-        const { medData } = req.body;
+        const { data } = req.body;
         const newMed = await MedicineModel.create({
-            ...medData,
+            ...data,
             donor: _id,
             donorname: firstname + " " + lastname,
             donorimage: profilepic

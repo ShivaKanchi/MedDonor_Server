@@ -59,6 +59,7 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
     try {
         const { data } = req.body;
         const { _id, firstname, lastname, profilepic, phone } = req.user;
+        // console.log(data, data.length)
         const eventCreate = await EventModel.create({
             ...data,
             coordinator: _id,
@@ -66,7 +67,10 @@ Router.post("/new", passport.authenticate("jwt", { session: false }), async (req
             coordinatorname: data?.coordinatorname ? data.coordinatorname : firstname + " " + lastname,
             coordinatorphno: data?.coordinatorphno ? data.coordinatorphno : phone
         });
-        return res.status(200).json({ data: eventCreate });
+        return res.status(200).json({
+            success: true,
+            data: eventCreate
+        });
     }
     catch (error) {
         return res.status(500).json({ error: error.message })
