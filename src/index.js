@@ -14,6 +14,7 @@ import Event from "./Api/Event";
 import Medical from "./Api/Medical";
 import Medicine from "./Api/Medicine";
 import Comment from "./Api/Comment"
+import Request from "./Api/Request"
 
 const meddonor = express()
 
@@ -40,6 +41,7 @@ meddonor.use("/event", Event)
 meddonor.use("/medical", Medical)
 meddonor.use("/medicine", Medicine)
 meddonor.use("/comment", Comment)
+meddonor.use("/request", Request)
 
 const PORT = process.env.PORT || 4000;
 meddonor.listen(PORT, () => {
